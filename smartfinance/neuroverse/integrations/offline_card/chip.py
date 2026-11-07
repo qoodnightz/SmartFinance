@@ -16,8 +16,9 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import ec
 
 # ---- Offline parameters loaded onto the chip (brief, section 5) ----
+# There is no cap on how much money can be reserved on a card. The reserved money sits in escrow,
+# so the bank's worst-case loss is always limited to what the customer chose to put there.
 MAX_PIN_ATTEMPTS = 3
-MAX_ALLOWANCE = 100_00         # £100 maximum on one offline card
 PER_TXN_LIMIT = 25_00          # £25 maximum per payment
 MAX_OFFLINE_PAYMENTS = 5       # consecutive offline payments before the chip must go online
 

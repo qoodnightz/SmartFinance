@@ -17,7 +17,7 @@ class Coach(Screen):
         main.pack(fill='both',expand=True)
         self.status=label(main,'',10,True,color=T.MUTED)
         self.status.pack(anchor='w',pady=(0,8))
-        self.history=scrolledtext.ScrolledText(main,height=14,wrap='word',font=(T.FONT,11),bg='#f8f7ff',fg=T.TEXT,
+        self.history=scrolledtext.ScrolledText(main,height=14,wrap='word',font=(T.FONT,11),bg='#f7f3fb',fg=T.TEXT,
                                                relief='flat',padx=16,pady=14,state='disabled')
         self.history.pack(fill='both',expand=True)
         self.history.tag_configure('user',foreground=T.PRIMARY,spacing1=12,font=(T.FONT,11,'bold'))
@@ -25,8 +25,8 @@ class Coach(Screen):
         suggestions=tk.Frame(main,bg=T.SURFACE)
         suggestions.pack(fill='x',pady=(12,8))
         for i,p in enumerate(PROMPTS):
-            b=tk.Button(suggestions,text=p,command=lambda x=p:self.ask(x),bg=T.PRIMARY_LIGHT,fg=T.PRIMARY,
-                        bd=0,padx=9,pady=8,font=(T.FONT,9),cursor='hand2',wraplength=160)
+            b=button(suggestions,p,lambda x=p:self.ask(x),secondary=True,padx=9,pady=8,
+                     font=(T.FONT,9,'bold'),wraplength=200)
             b.grid(row=i//2,column=i%2,sticky='ew',padx=4,pady=3)
         for i in range(2): suggestions.columnconfigure(i,weight=1)
         bottom=tk.Frame(main,bg=T.SURFACE)

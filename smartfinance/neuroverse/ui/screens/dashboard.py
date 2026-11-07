@@ -10,7 +10,7 @@ from neuroverse.ui.widgets import Screen, panel, label, button, gradient
 
 class Dashboard(Screen):
     def __init__(self, parent, store, bus, navigate):
-        super().__init__(parent, store, bus, navigate, 'Make your money make sense ✦',
+        super().__init__(parent, store, bus, navigate, 'Make your money make sense',
                          'A little clarity today, more possibilities tomorrow.')
         self.animation_phase = 0
         self._animation_job = None
@@ -23,10 +23,10 @@ class Dashboard(Screen):
         actions = tk.Frame(self, bg=T.BG)
         actions.pack(fill='x', pady=(0, 14))
         for i, (title, detail, page, sym, color, tint) in enumerate([
-            ('Time travel', 'Explore futures', 'Time Travel', '◷', T.PRIMARY, '#e9e5ff'),
-            ('FutureCard', 'Practice payments', 'Card Integration', '▣', '#e84d9c', '#ffe2f1'),
-            ('AI guide', 'Ask anything', 'Future-Self Coach', '✦', '#007e91', '#d7f9f7'),
-            ('My steps', 'Small wins', 'Action Plan', '✓', '#9b6500', '#fff0cd'),
+            ('Time travel', 'Explore futures', 'Time Travel', '◷', T.PRIMARY, '#ebe3f3'),
+            ('Offline card', 'Spend without signal', 'Offline Card', '▣', T.TEAL, '#d9f1ef'),
+            ('AI guide', 'Ask anything', 'Future-Self Coach', '✦', '#a0125f', '#fde4ee'),
+            ('My steps', 'Small wins', 'Action Plan', '✓', '#8a5a00', '#fff2d1'),
         ]):
             tile = tk.Frame(actions, bg=T.SURFACE, highlightbackground=T.BORDER,
                             highlightthickness=1, padx=13, pady=10, cursor='hand2')
@@ -43,11 +43,11 @@ class Dashboard(Screen):
                 widget.bind('<Enter>', lambda e, t=tile: t.configure(highlightbackground=T.PRIMARY))
                 widget.bind('<Leave>', lambda e, t=tile: t.configure(highlightbackground=T.BORDER))
 
-        self.alert = tk.Frame(self, bg='#fff0fa', padx=16, pady=11)
+        self.alert = tk.Frame(self, bg='#e6f6f2', padx=16, pady=11)
         self.alert.pack(fill='x', pady=(0, 13))
-        self.alert_heading = label(self.alert, '', 11, True, bg='#fff0fa', color='#9f3271')
+        self.alert_heading = label(self.alert, '', 11, True, bg='#e6f6f2', color='#00604d')
         self.alert_heading.pack(anchor='w')
-        self.alert_detail = label(self.alert, '', 10, bg='#fff0fa', color='#9f3271',
+        self.alert_detail = label(self.alert, '', 10, bg='#e6f6f2', color='#00604d',
                                   justify='left', wraplength=665)
         self.alert_detail.pack(anchor='w', pady=(4, 0))
 
@@ -100,22 +100,22 @@ class Dashboard(Screen):
             return
         c.delete('all')
         w, h = max(440, c.winfo_width()), 194
-        gradient(c, w, h, '#635bff', '#e05db2', stripes=85)
+        gradient(c, w, h, T.HERO_TOP, T.HERO_END, stripes=85)
         shift = math.sin(self.animation_phase) * 14
-        c.create_oval(w*.57, -140+shift, w+130, 165+shift, fill='#a85be5', outline='')
-        c.create_oval(w*.81, -115-shift*.7, w+220, 230-shift*.7, fill='#7045d2', outline='')
+        c.create_oval(w*.57, -140+shift, w+130, 165+shift, fill='#7a3b9e', outline='')
+        c.create_oval(w*.81, -115-shift*.7, w+220, 230-shift*.7, fill='#42145f', outline='')
         c.create_oval(w*.67, 124, w*.73, 178, fill=T.YELLOW, outline='')
         c.create_oval(w*.72, 142, w*.75, 170, fill=T.MINT, outline='')
         c.create_text(30, 25, anchor='nw', text='YOUR PRACTICE BALANCE',
-                      fill='#f6efff', font=(T.FONT, 10, 'bold'))
+                      fill='#f6efff', font=T.font(10, 'bold'))
         c.create_text(30, 56, anchor='nw', text=money(self.store.state.balance_pence),
-                      fill='white', font=(T.FONT, 36, 'bold'))
-        c.create_text(32, 125, anchor='nw', text='Little steps, brighter futures  ✨',
-                      fill='white', font=(T.FONT, 11, 'bold'))
+                      fill='white', font=T.font(36, 'bold'))
+        c.create_text(32, 125, anchor='nw', text='Little steps, brighter futures',
+                      fill='white', font=T.font(11, 'bold'))
         c.create_text(31, 171, anchor='sw', text='●  PRACTICE MODE · NO REAL MONEY',
-                      fill='#f9eaff', font=(T.FONT, 9, 'bold'))
+                      fill='#f9eaff', font=T.font(9, 'bold'))
         c.create_text(w-25, 171, anchor='se', text='NEUROVERSE  ✦',
-                      fill='white', font=(T.FONT, 10, 'bold'))
+                      fill='white', font=T.font(10, 'bold'))
 
     def _draw_sparkline(self):
         if not hasattr(self, '_forecast'):
@@ -143,11 +143,11 @@ class Dashboard(Screen):
         low = self._forecast['lowest']['balance_pence']
         self.low_balance.config(text=money(low), fg=T.DANGER if low < 0 else T.TEXT)
         if self._forecast['shortfall']:
-            bg, fg = '#fff0f7', '#9f3271'
+            bg, fg = '#fde4ee', '#8c0f4a'
             title = '✦  Heads up — a future balance dip'
             detail = f"Under these assumptions, your balance could go below £0 on {self._forecast['shortfall']['date']}. You can explore alternatives."
         else:
-            bg, fg = '#e8fbf5', '#087b66'
+            bg, fg = '#e6f6f2', '#00604d'
             title = '✦  Your next 30 days look steady'
             detail = 'Your known scheduled payments do not produce a negative balance in the current practice forecast.'
         self.alert.configure(bg=bg)
@@ -156,7 +156,7 @@ class Dashboard(Screen):
         for child in self.events.winfo_children():
             child.destroy()
         ordered = sorted(s.transactions, key=lambda x: x.date, reverse=True)
-        colors = [('#e9e5ff', '#6257d2'), ('#d9fbf3', '#008d79'), ('#ffe7f2', '#d44871'), ('#fff1d5', '#9b6500')]
+        colors = [('#ebe3f3', '#5a287d'), ('#dff4ef', '#00775f'), ('#fde4ee', '#b3123b'), ('#fff2d1', '#8a5a00')]
         for i, txn in enumerate(ordered[:5]):
             bg, fg = colors[i % len(colors)]
             row = tk.Frame(self.events, bg=T.SURFACE)

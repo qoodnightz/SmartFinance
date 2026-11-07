@@ -17,9 +17,9 @@ class TimeTravel(Screen):
         self.choice_buttons = {}
         for i, (key, title) in enumerate(SCENARIO_LABELS.items()):
             icon, subtitle, tint, fg = [
-                ('↗', 'Your current plan', '#eeebff', T.PRIMARY),
-                ('⚡', 'A surprise cost', '#ffe4ef', '#af3c75'),
-                ('◷', 'Change payment timing', '#d9f8f2', '#007f6e')
+                ('↗', 'Your current plan', '#ebe3f3', T.PRIMARY),
+                ('⚡', 'A surprise cost', '#fde4ee', '#a0125f'),
+                ('◷', 'Change payment timing', '#dff4ef', '#00775f')
             ][i]
             item = tk.Frame(choices, bg=T.SURFACE, highlightthickness=2,
                             highlightbackground=T.BORDER, padx=12, pady=10, cursor='hand2')
@@ -97,23 +97,23 @@ class TimeTravel(Screen):
         for ratio in (0, .25, .5, .75, 1):
             val = lo+(hi-lo)*ratio
             yp = y(val)
-            c.create_line(65, yp, w-18, yp, fill='#eeedf8', dash=(3,4))
+            c.create_line(65, yp, w-18, yp, fill='#e8e0f0', dash=(3,4))
         zero = y(0)
-        c.create_line(65, zero, w-18, zero, fill='#ef91b7', dash=(5,4), width=1)
-        c.create_text(9, zero, text='£0', anchor='w', fill=T.DANGER, font=(T.FONT, 9, 'bold'))
+        c.create_line(65, zero, w-18, zero, fill='#e58aae', dash=(5,4), width=1)
+        c.create_text(9, zero, text='£0', anchor='w', fill=T.DANGER, font=T.font(9, 'bold'))
         coords=[]
         for i, point in enumerate(points):
             coords.extend([x(i),y(point['balance_pence'])])
         c.create_polygon(65, h-39, *coords, x(len(points)-1), h-39,
-                         fill='#eeeaff', outline='')
+                         fill='#ebe3f3', outline='')
         line_color = T.PINK if self.selection.get() == 'emergency' else (T.GOOD if self.selection.get() == 'bill_shift' else T.PRIMARY)
         c.create_line(*coords, fill=line_color, width=4, smooth=True)
         for index in (0, 10, 20, 30):
-            c.create_text(x(index), h-15, text=f'Day {index}', fill=T.MUTED, font=(T.FONT, 9))
+            c.create_text(x(index), h-15, text=f'Day {index}', fill=T.MUTED, font=T.font(9))
         if self._hover_index is not None:
             p = points[self._hover_index]
             xp, yp = x(self._hover_index), y(p['balance_pence'])
-            c.create_line(xp, 11, xp, h-39, fill='#a29be6', dash=(3, 3))
+            c.create_line(xp, 11, xp, h-39, fill='#a98bc7', dash=(3, 3))
             c.create_oval(xp-6,yp-6,xp+6,yp+6,fill=line_color,outline='white',width=2)
             self.inspect.config(text=f"Day {self._hover_index} · {p['date']} · {money(p['balance_pence'])}")
         else:

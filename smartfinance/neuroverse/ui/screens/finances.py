@@ -86,8 +86,8 @@ class Finances(Screen):
             row.pack(fill='x')
             label(row, f'{t.date}    {t.description}',10,True).pack(side='left',fill='x',expand=True)
             if t.source != 'card':
-                tk.Button(row,text='Remove',command=lambda tx=t:self.remove_item(tx.id),
-                          bg=T.PRIMARY_LIGHT,fg=T.PRIMARY,bd=0,cursor='hand2').pack(side='right',padx=(12,0))
+                button(row,'Remove',lambda tx=t:self.remove_item(tx.id),secondary=True,
+                       padx=10,pady=4).pack(side='right',padx=(12,0))
             label(row, money(t.amount_pence), 10, True, color=T.GOOD if t.amount_pence>0 else T.TEXT).pack(side='right')
         if len(entries)>9:
             label(self.list_frame,f'+ {len(entries)-9} more entries',9,color=T.MUTED).pack(anchor='w')
