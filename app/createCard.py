@@ -6,8 +6,8 @@ Run with:  streamlit run createCard.py        (from inside the virtualCard folde
 """
 import streamlit as st
 
-from bank import Bank, RealAccount
-from chip import MAX_ALLOWANCE, MAX_OFFLINE_PAYMENTS, PER_TXN_LIMIT, fmt, to_pence
+from smartfinance.neuroverse.integrations.virtualCard.bank import Bank, RealAccount
+from smartfinance.neuroverse.integrations.virtualCard.chip import MAX_ALLOWANCE, MAX_OFFLINE_PAYMENTS, PER_TXN_LIMIT, fmt, to_pence
 
 st.set_page_config(page_title="Offline Card", page_icon="💳")
 
